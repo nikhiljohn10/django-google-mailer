@@ -1,0 +1,9 @@
+[tox]
+envlist = py{36,37,38,39}-django300
+
+[testenv]
+deps =
+    django300: -rrequirements/core.txt
+commands =
+    pip install -e .
+    python setup.py test
