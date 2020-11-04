@@ -1,11 +1,10 @@
-from django.conf import settings
-from googleapiclient.discovery import build
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 from base64 import urlsafe_b64encode
+from django.conf import settings
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from googleapiclient.errors import HttpError
+from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
-from django.urls import reverse
 
 
 class Gmail:
@@ -18,33 +17,21 @@ class Gmail:
             scopes=scopes,
             redirect_uri=redirect_uri)
 
-    def generate_urls(self, request):
-        self.urls = {
-            'auth': request.build_absolute_uri(
-                reverse('gmailer:auth')),
-            'revoke': request.build_absolute_uri(
-                reverse('gmailer:revoke')),
-            'test_send_mail': request.build_absolute_uri(
-                reverse('gmailer:test_send_mail')),
-        }
-        return self.urls
-
-    def authorize(self, request):
-        if not hasattr(self, 'urls') or not self.urls:
-            self.generate_urls(request)
+    def authorize(self):
         return self.flow.authorization_url()
 
     def verify(self, request):
         code = request.GET.get('code', '')
         state = request.GET.get('state', '')
         if code and request.session.has_key(
-            'oauth_state') and state == request.session['oauth_state']:
+                'oauth_state') and state == request.session['oauth_state']:
             try:
                 self.flow.fetch_token(code=code)
                 self.credentials = self.flow.credentials
-                self.service = build('gmail', 'v1', credentials=self.credentials)
+                self.service = build(
+                    'gmail', 'v1', credentials=self.credentials)
                 self.email = (self.service.users().getProfile(
-                        userId="me").execute())['emailAddress']
+                    userId="me").execute())['emailAddress']
                 self.activated = True
                 return {
                     'user': self.user,
@@ -57,7 +44,6 @@ class Gmail:
                         'client_secret': self.credentials.client_secret,
                         'scopes': self.credentials.scopes,
                     },
-                    'urls': self.urls,
                 }
             except:
                 self.revoke()
@@ -71,7 +57,6 @@ class Gmail:
         self.credentials = None
         self.service = None
         self.email = ''
-        self.urls = {}
 
     def _create_message(self, subject, message_text, from_email, recipient_list, html):
         message = MIMEMultipart()
@@ -104,8 +89,8 @@ class Gmail:
             raise self.UnauthorizedAPIError()
 
     def test_mail(self,
-        subject="Django Google Mailer", 
-        message="Hi,\n\nWelcome to Django Site"):
+                  subject="Django Google Mailer",
+                  message="Hi,\n\nWelcome to Django Site"):
         if self.activated:
             try:
                 self.send_mail(subject, message, [self.email])
@@ -113,7 +98,6 @@ class Gmail:
                 print(e)
         else:
             raise self.UnauthorizedAPIError()
-        
 
     class SettingError(Exception):
 
@@ -136,9 +120,11 @@ class Gmail:
     class HttpError(Exception):
         pass
 
+
 if all(hasattr(settings, attr) for attr in ['GMAIL_SECRET', 'GMAIL_SCOPES', 'GMAIL_REDIRECT']):
     mailer = Gmail(
-        user=settings.GMAIL_USER if hasattr(settings, 'GMAIL_USER') else "Django Mail Admin",
+        user=settings.GMAIL_USER if hasattr(
+            settings, 'GMAIL_USER') else "Django Mail Admin",
         client_secrets_file=settings.GMAIL_SECRET,
         scopes=settings.GMAIL_SCOPES,
         redirect_uri=settings.GMAIL_REDIRECT)

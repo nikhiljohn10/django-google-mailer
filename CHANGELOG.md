@@ -8,6 +8,7 @@
 
 #### Fixes
 
+- Removed url generation
 - Fixed command logging in Makefile
 
 ## 0.1.0 (2020-11-04)

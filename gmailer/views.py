@@ -5,10 +5,6 @@ from django.urls import reverse
 
 from gmailer.gmail import mailer
 
-def paths(request):
-    urls = mailer.generate_urls(request)
-    return JsonResponse(urls)
-
 def auth(request):
     url, request.session['oauth_state'] = mailer.authorize(request)
     return redirect(url)
