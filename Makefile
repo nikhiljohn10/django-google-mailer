@@ -23,7 +23,7 @@ clean-docs:
 	@cd docs && make clean >/dev/null 2>&1 || rm -rf _build/doctrees _build/html
 
 setup:
-	@pip install -U wheel setuptools
+	@pip install -U pip wheel setuptools
 	@pip install -r requirements.txt
 
 upgrade-setup:
@@ -37,16 +37,16 @@ build: clean-build
 	@python3 setup.py sdist bdist_wheel
 
 test-publish:
-	@twine upload --repository testpypi dist/* --config-file .pypirc 
+	@twine upload --repository testpypi dist/* --config-file .pypirc
 
 publish:
-	@twine upload dist/* --config-file .pypirc 
-
-clean: clean-build clean-app clean-venv clean-docs
+	@twine upload dist/* --config-file .pypirc
 
 run:
-	python manage.py makemigrations
-	python manage.py migrate
-	python manage.py runserver 0.0.0.0:8000
+	@python manage.py makemigrations
+	@python manage.py migrate
+	@python manage.py runserver 0.0.0.0:8000
+
+clean: clean-build clean-app clean-venv clean-docs
 
 .PHONY: setup build publish venv clean

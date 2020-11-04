@@ -1,6 +1,16 @@
 # Changelog
 
-## 0.1 (2020-11-04)
+## 0.1.1 (2020-11-04)
+
+#### Updates
+
+- Updated urls for development
+
+#### Fixes
+
+- Fixed command logging in Makefile
+
+## 0.1.0 (2020-11-04)
 
 #### New Features
 
@@ -13,7 +23,7 @@
 - Created test environment
 - Added documenation settings
 
-#### Update
+#### Updates
 
 - Updated structure of django settings
 - Updated and restructed requirement.txt
