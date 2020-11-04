@@ -1,7 +1,6 @@
 -r core.txt
--r sphinx.txt
+-r docs.txt
 
-auto-changelog==0.5.1
 twine>=3.2.0
 setuptools>=50.3.2
 wheel>=0.35.1

@@ -5,6 +5,7 @@
 #### Updates
 
 - Updated urls for development
+- Updated requirements file
 
 #### Fixes
 
