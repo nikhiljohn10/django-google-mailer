@@ -10,6 +10,7 @@
 
 - Removed url generation
 - Fixed command logging in Makefile
+- Redirection fixed in views
 
 ## 0.1.0 (2020-11-04)
 
@@ -22,11 +23,11 @@
 - Created send mail and test mail functionalities
 - Created development environment
 - Created test environment
-- Added documenation settings
+- Added documentation settings
 
 #### Updates
 
-- Updated structure of django settings
+- Updated structure of Django settings
 - Updated and restructed requirement.txt
-- Converted django app in to pip package
+- Converted Django app in to pip package
 - Updated readme file
