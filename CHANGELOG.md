@@ -4,6 +4,7 @@
 
 #### Updates
 
+- Updated changelog in docs
 - Updated pypi setup file
 
 #### Fixes

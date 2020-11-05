@@ -26,20 +26,22 @@ setup:
 	@pip install -U pip wheel setuptools
 	@pip install -r requirements.txt
 
-upgrade-setup:
+upgrade:
 	@pip install -Ur requirements/development.txt
 	@pip freeze > requirements.txt
 
-html-docs:
+html-docs: clean-docs
+	@m2r2 --overwrite CHANGELOG.md
+	@mv -f CHANGELOG.rst ./docs/change.rst
 	@cd docs && make html
 
 build: clean-build
 	@python3 setup.py sdist bdist_wheel
 
-test-publish:
+test-release:
 	@twine upload --repository testpypi dist/* --config-file .pypirc
 
-publish:
+release:
 	@twine upload dist/* --config-file .pypirc
 
 run:
@@ -49,4 +51,4 @@ run:
 
 clean: clean-build clean-app clean-venv clean-docs
 
-.PHONY: setup build publish venv clean
+.PHONY: setup build release venv clean
