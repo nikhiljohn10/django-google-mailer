@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.1 (2020-11-05)
+
+#### Updates
+
+- Updated pypi setup file
+
+#### Fixes
+
+- Fixed readthedocs config
+
 ## 0.2.0 (2020-11-05)
 
 #### Updates
