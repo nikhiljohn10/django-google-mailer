@@ -1,11 +1,12 @@
 # Changelog
 
-## 0.1.1 (2020-11-04)
+## 0.2.0 (2020-11-05)
 
 #### Updates
 
 - Updated urls for development
 - Updated requirements file
+- Added module documentation
 
 #### Fixes
 
