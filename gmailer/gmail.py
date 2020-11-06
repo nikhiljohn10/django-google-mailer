@@ -148,18 +148,30 @@ class Gmail:
         else:
             raise self.UnauthorizedAPIError()
 
+    @staticmethod
+    def check_settings(setting_names):
+        """Check each setting names if they exists inside Django Settings and raise :class:`SettingError` exception otherwise
+
+        :param list setting_names: Subject of the email send
+        :rtype: bool
+        """
+        for attr in setting_names:
+            if not hasattr(settings, attr):
+                raise Gmail.SettingError(attr)
+        return True
+
     class SettingError(Exception):
         """When settings are not properly configured, this exception is raised
 
-        :param str message: Subject of the email send
+        :param str setting_name: Setting which is missing or misconfigured.
         :param error: Body of the email send
         :type error: :class:`Exception`
         """
 
-        def __init__(self, message, error=None):
-            self.message = message or "Gmail API settings are missing or misconfigured."
+        def __init__(self, setting_name, error=None):
+            self.message = setting_name + ' is missing/misconfigured inside Django Settings'
             self.error = error
-            super().__init__(message)
+            super().__init__(self.message)
 
     class StateError(Exception):
         """When state of the request is not matched with state from request, this exception is raised
@@ -169,10 +181,10 @@ class Gmail:
         :type error: :class:`Exception`
         """
 
-        def __init__(self, message, error=None):
+        def __init__(self, message=None, error=None):
             self.message = message or "The state/code is not valid. Check the verification url."
             self.error = error
-            super().__init__(message)
+            super().__init__(self.message)
 
     class UnauthorizedAPIError(Exception):
         """When app try to access API without proper authorization, this exception is raised
@@ -182,18 +194,16 @@ class Gmail:
         :type error: :class:`Exception`
         """
 
-        def __init__(self, message, error=None):
+        def __init__(self, message=None, error=None):
             self.message = message or "Gmail API Service is not authorized. Contact site administrator."
             self.error = error
-            super().__init__(message)
+            super().__init__(self.message)
 
 
-if all(hasattr(settings, attr) for attr in ['GMAIL_SECRET', 'GMAIL_SCOPES', 'GMAIL_REDIRECT']):
+if Gmail.check_settings(['GMAIL_SECRET', 'GMAIL_SCOPES', 'GMAIL_REDIRECT']):
     mailer = Gmail(
         user=settings.GMAIL_USER if hasattr(
             settings, 'GMAIL_USER') else "Django Mail Admin",
         client_secrets_file=settings.GMAIL_SECRET,
         scopes=settings.GMAIL_SCOPES,
         redirect_uri=settings.GMAIL_REDIRECT)
-else:
-    raise Gmail.SettingError()
