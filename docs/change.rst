@@ -9,7 +9,7 @@ Updates
 ~~~~~~~
 
 
-* Updated readme file
+* Updated changelog in docs
 * Updated pypi setup file
 
 Fixes
