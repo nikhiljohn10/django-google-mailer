@@ -5,6 +5,7 @@
 #### Fixes
 
 - Fixed Exceptions
+- Fixed readthedocs for autodoc
 
 ## 0.2.1 (2020-11-05)
 

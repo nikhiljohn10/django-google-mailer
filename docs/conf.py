@@ -13,16 +13,31 @@
 import re
 import os
 import sys
-import django
 
-sys.path.insert(0, os.path.abspath('../'))
+sys.path.insert(0, os.path.abspath('..'))
+
 from gmailer import __version__
+from django.conf import settings
+
+settings.configure(
+    GMAIL_SECRET='google_client_secret_sample.json',
+    GMAIL_SCOPES=[
+    	"https://www.googleapis.com/auth/gmail.metadata",
+    	"https://www.googleapis.com/auth/gmail.send",
+    ],
+    GMAIL_REDIRECT='http://localhost:8000/gmailer/verify')
+
+autodoc_mock_imports = [
+    "django",
+    "google-api-python-client",
+    "google-auth-oauthlib",
+]
 
 # Specify settings module
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'test_project.settings')
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'test_project.settings')
 
 # Setup Django
-django.setup()
+# django.setup()
 
 
 # -- Project information -----------------------------------------------------
