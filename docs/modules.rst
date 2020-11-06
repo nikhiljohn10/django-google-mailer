@@ -30,18 +30,18 @@ GMAIL_SECRET
 
 `Default:` **google_client_secret.json**
 
-This settings is the name of admin which shows up inside mail received by user
+The Google OAuth client secret obtained from :ref:`Gmail API Setup <gmail_setup>`
 
 GMAIL_SCOPES
 ------------
 
 `Default:` **[ https://www.googleapis.com/auth/gmail.metadata, https://www.googleapis.com/auth/gmail.send ]**
 
-This settings is the name of admin which shows up inside mail received by user
+Gmail scopes express the permissions you need to authorize for your app and send mails
 
 GMAIL_REDIRECT
 --------------
 
 `Default:` **http://localhost:8000/gmailer/verify**
 
-This settings is the name of admin which shows up inside mail received by user
+The redirect URI is the endpoint to which the OAuth 2.0 server can send responses.

@@ -1,6 +1,8 @@
 Quick start
 ===========
 
+.. _gmail_setup:
+
 Gmail API setup
 ^^^^^^^^^^^^^^^
 

@@ -5,12 +5,19 @@ Changelog
 0.2.3 (2020-11-06)
 ------------------
 
+Updates
+~~~~~~~
+
+
+* Updated makefile with doc updatation
+
 Fixes
 ~~~~~
 
 
 * Fixed Exceptions
 * Fixed readthedocs for autodoc
+* Fixed settings documentation
 
 0.2.1 (2020-11-05)
 ------------------
