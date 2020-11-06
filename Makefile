@@ -30,9 +30,11 @@ upgrade:
 	@pip install -Ur requirements/development.txt
 	@pip freeze > requirements.txt
 
-html-docs: clean-docs
+update-docs: clean-docs
 	@m2r2 --overwrite CHANGELOG.md
 	@mv -f CHANGELOG.rst ./docs/change.rst
+
+html-docs: update-docs
 	@cd docs && make html
 
 build: clean-build

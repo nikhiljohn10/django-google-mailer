@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.2.2 (2020-11-06)
+## 0.2.3 (2020-11-06)
+
+#### Updates
+
+- Updated makefile with doc updatation
 
 #### Fixes
 

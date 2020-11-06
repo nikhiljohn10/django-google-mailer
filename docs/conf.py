@@ -33,13 +33,6 @@ autodoc_mock_imports = [
     "google-auth-oauthlib",
 ]
 
-# Specify settings module
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'test_project.settings')
-
-# Setup Django
-# django.setup()
-
-
 # -- Project information -----------------------------------------------------
 
 project = 'Django Google Mailer'

@@ -2,6 +2,16 @@
 Changelog
 =========
 
+0.2.3 (2020-11-06)
+------------------
+
+Fixes
+~~~~~
+
+
+* Fixed Exceptions
+* Fixed readthedocs for autodoc
+
 0.2.1 (2020-11-05)
 ------------------
 
