@@ -1,5 +1,6 @@
 -r core.txt
 -r docs.txt
+-r test.txt
 
 twine>=3.2.0
 setuptools>=50.3.2

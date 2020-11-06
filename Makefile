@@ -19,6 +19,9 @@ clean-app:
 clean-venv:
 	@rm -rf ./venv
 
+clean-test:
+	@rm -rf ./tox
+
 clean-docs:
 	@cd docs && make clean >/dev/null 2>&1 || rm -rf _build/doctrees _build/html
 
@@ -46,11 +49,14 @@ test-release:
 release:
 	@twine upload dist/* --config-file .pypirc
 
+test:
+	@python manage.py test
+
 run:
 	@python manage.py makemigrations
 	@python manage.py migrate
 	@python manage.py runserver 0.0.0.0:8000
 
-clean: clean-build clean-app clean-venv clean-docs
+clean: clean-build clean-app clean-venv clean-docs test
 
 .PHONY: setup build release venv clean

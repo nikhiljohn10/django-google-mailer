@@ -24,6 +24,7 @@ class Gmail:
         self.activated = False
         """A flag which indicate if Gmail API is authorized to be used"""
         self.user = user
+        self.outbox = []
         self.flow = InstalledAppFlow.from_client_secrets_file(
             client_secrets_file=client_secrets_file,
             scopes=scopes,
@@ -47,8 +48,7 @@ class Gmail:
         """
         code = request.GET.get('code', '')
         state = request.GET.get('state', '')
-        if code and request.session.has_key(
-                'oauth_state') and state == request.session['oauth_state']:
+        if code and 'oauth_state' in request.session and state == request.session['oauth_state']:
             try:
                 self.flow.fetch_token(code=code)
                 self.credentials = self.flow.credentials
@@ -71,6 +71,7 @@ class Gmail:
                 }
             except:
                 self.revoke()
+                return { 'error': 'Unable authorize request' }
         else:
             raise self.StateError()
 
@@ -82,6 +83,7 @@ class Gmail:
         self.credentials = None
         self.service = None
         self.email = ''
+        self.outbox = []
 
     def _create_message(self, subject, message_text, from_email, recipient_list, html):
         """Create a plain text/html message which can be send by Gmail API service
@@ -125,6 +127,7 @@ class Gmail:
                     userId="me",
                     body=body).execute())
                 print('Message sent with id: %s' % sent_message['id'])
+                return sent_message
             except HttpError as error:
                 pass
         else:
@@ -142,7 +145,8 @@ class Gmail:
                 sub = subject or "Django Google Mailer"
                 msg = message or "Hi,\n\nWelcome to Django Site"
                 to = recipient_list or [self.email]
-                self.send_mail(sub, msg, to)
+                sent_message = self.send_mail(sub, msg, to)
+                self.outbox.append(sent_message)
             except Exception as e:
                 print(e)
         else:
