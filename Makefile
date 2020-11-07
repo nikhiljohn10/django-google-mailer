@@ -28,6 +28,7 @@ clean-docs:
 setup:
 	@pip install -U pip wheel setuptools
 	@pip install -r requirements.txt
+	@curl https://raw.githubusercontent.com/googleapis/google-auth-library-python-oauthlib/master/tests/unit/data/client_secrets.json -o google_client_secret.json
 
 upgrade:
 	@pip install -Ur requirements/development.txt

@@ -6,6 +6,15 @@ from googleapiclient.errors import HttpError
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 
+_GMAIL_CONSTS = {
+    'GMAIL_SECRET': 'google_client_secret.json',
+    'GMAIL_SCOPES': [
+        "https://www.googleapis.com/auth/gmail.metadata",
+        "https://www.googleapis.com/auth/gmail.send",
+    ],
+    'GMAIL_REDIRECT': 'http://localhost:8000/gmailer/verify',
+    'GMAIL_USER': 'Django Mail Admin'
+}
 
 class Gmail:
     """This class defines all the core functional methods of Gmailer
@@ -20,7 +29,7 @@ class Gmail:
        initialisation of this class
     """
 
-    def __init__(self, user, client_secrets_file, scopes, redirect_uri):
+    def __init__(self, client_secrets_file, scopes, redirect_uri, user):
         self.activated = False
         """A flag which indicate if Gmail API is authorized to be used"""
         self.user = user
@@ -153,16 +162,29 @@ class Gmail:
             raise self.UnauthorizedAPIError()
 
     @staticmethod
-    def check_settings(setting_names):
+    def add_settings():
         """Check each setting names if they exists inside Django Settings and raise :class:`SettingError` exception otherwise
 
-        :param list setting_names: Subject of the email send
         :rtype: bool
         """
-        for attr in setting_names:
+        for attr in ['GMAIL_SECRET', 'GMAIL_SCOPES', 'GMAIL_REDIRECT', 'GMAIL_USER']:
             if not hasattr(settings, attr):
-                raise Gmail.SettingError(attr)
+                setattr(settings, attr, _GMAIL_CONSTS[attr])
+        installed_apps = getattr(settings, 'INSTALLED_APPS', [])
+        installed_apps += [ 'gmailer', ]
+        setattr(settings, 'INSTALLED_APPS', installed_apps)
         return True
+
+    # @staticmethod
+    # def check_settings():
+    #     """Check each setting names if they exists inside Django Settings and raise :class:`SettingError` exception otherwise
+
+    #     :rtype: bool
+    #     """
+    #     for attr in ['GMAIL_SECRET', 'GMAIL_SCOPES', 'GMAIL_REDIRECT', 'GMAIL_USER']:
+    #         if not hasattr(settings, attr):
+    #             raise Gmail.SettingError(attr)
+    #     return True
 
     class SettingError(Exception):
         """When settings are not properly configured, this exception is raised
@@ -204,10 +226,10 @@ class Gmail:
             super().__init__(self.message)
 
 
-if Gmail.check_settings(['GMAIL_SECRET', 'GMAIL_SCOPES', 'GMAIL_REDIRECT']):
+
+if Gmail.add_settings():
     mailer = Gmail(
-        user=settings.GMAIL_USER if hasattr(
-            settings, 'GMAIL_USER') else "Django Mail Admin",
         client_secrets_file=settings.GMAIL_SECRET,
         scopes=settings.GMAIL_SCOPES,
-        redirect_uri=settings.GMAIL_REDIRECT)
+        redirect_uri=settings.GMAIL_REDIRECT,
+        user=settings.GMAIL_USER)
