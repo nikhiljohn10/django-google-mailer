@@ -55,6 +55,7 @@ class Gmail:
         :param request: A request object received from requested view
         :rtype: dict
         """
+
         code = request.GET.get('code', '')
         state = request.GET.get('state', '')
         if code and 'oauth_state' in request.session and state == request.session['oauth_state']:
@@ -78,9 +79,9 @@ class Gmail:
                         'scopes': self.credentials.scopes,
                     },
                 }
-            except:
+            except Exception as err:
                 self.revoke()
-                return { 'error': 'Unable authorize request' }
+                return { 'message': 'Unable to authorize request', 'error': str(err) }
         else:
             raise self.StateError()
 

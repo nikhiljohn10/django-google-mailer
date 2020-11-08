@@ -1,3 +1,6 @@
+
+SAMPLE_SECRET := https://raw.githubusercontent.com/googleapis/google-auth-library-python-oauthlib/master/tests/unit/data/client_secrets.json
+
 venv:
 	@if [ ! -d "./venv" ]; then python3 -m venv venv; fi
 	@echo "Use following commands:"
@@ -28,7 +31,7 @@ clean-docs:
 setup:
 	@pip install -U pip wheel setuptools
 	@pip install -r requirements.txt
-	@curl https://raw.githubusercontent.com/googleapis/google-auth-library-python-oauthlib/master/tests/unit/data/client_secrets.json -o google_client_secret.json
+	@curl -o google_client_secret.json $(SAMPLE_SECRET)
 
 upgrade:
 	@pip install -Ur requirements/development.txt
