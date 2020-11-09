@@ -55,6 +55,7 @@ class Gmail:
         :param request: A request object received from requested view
         :rtype: dict
         """
+
         code = request.GET.get('code', '')
         state = request.GET.get('state', '')
         if code and 'oauth_state' in request.session and state == request.session['oauth_state']:
@@ -78,9 +79,9 @@ class Gmail:
                         'scopes': self.credentials.scopes,
                     },
                 }
-            except:
+            except Exception as err:
                 self.revoke()
-                return { 'error': 'Unable authorize request' }
+                return { 'message': 'Unable to authorize request', 'error': str(err) }
         else:
             raise self.StateError()
 
@@ -175,17 +176,6 @@ class Gmail:
         setattr(settings, 'INSTALLED_APPS', installed_apps)
         return True
 
-    # @staticmethod
-    # def check_settings():
-    #     """Check each setting names if they exists inside Django Settings and raise :class:`SettingError` exception otherwise
-
-    #     :rtype: bool
-    #     """
-    #     for attr in ['GMAIL_SECRET', 'GMAIL_SCOPES', 'GMAIL_REDIRECT', 'GMAIL_USER']:
-    #         if not hasattr(settings, attr):
-    #             raise Gmail.SettingError(attr)
-    #     return True
-
     class SettingError(Exception):
         """When settings are not properly configured, this exception is raised
 
@@ -233,3 +223,5 @@ if Gmail.add_settings():
         scopes=settings.GMAIL_SCOPES,
         redirect_uri=settings.GMAIL_REDIRECT,
         user=settings.GMAIL_USER)
+else:
+    raise Gmail.SettingError()

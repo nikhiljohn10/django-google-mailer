@@ -20,7 +20,7 @@ from gmailer import __version__
 from django.conf import settings
 
 settings.configure(
-    GMAIL_SECRET='google_client_secret_sample.json',
+    GMAIL_SECRET='../gmailer/data/sample.json',
     GMAIL_SCOPES=[
     	"https://www.googleapis.com/auth/gmail.metadata",
     	"https://www.googleapis.com/auth/gmail.send",
