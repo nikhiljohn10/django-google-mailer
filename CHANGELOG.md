@@ -16,6 +16,7 @@
 - Fixed testcases
 - Removed SettingError execption
 - Fixed Makefile
+- Renamed project setting and removed runtest
 
 ## 0.2.3 (2020-11-06)
 
