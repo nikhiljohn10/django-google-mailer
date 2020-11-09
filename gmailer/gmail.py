@@ -176,17 +176,6 @@ class Gmail:
         setattr(settings, 'INSTALLED_APPS', installed_apps)
         return True
 
-    # @staticmethod
-    # def check_settings():
-    #     """Check each setting names if they exists inside Django Settings and raise :class:`SettingError` exception otherwise
-
-    #     :rtype: bool
-    #     """
-    #     for attr in ['GMAIL_SECRET', 'GMAIL_SCOPES', 'GMAIL_REDIRECT', 'GMAIL_USER']:
-    #         if not hasattr(settings, attr):
-    #             raise Gmail.SettingError(attr)
-    #     return True
-
     class SettingError(Exception):
         """When settings are not properly configured, this exception is raised
 
@@ -234,3 +223,5 @@ if Gmail.add_settings():
         scopes=settings.GMAIL_SCOPES,
         redirect_uri=settings.GMAIL_REDIRECT,
         user=settings.GMAIL_USER)
+else:
+    raise Gmail.SettingError()

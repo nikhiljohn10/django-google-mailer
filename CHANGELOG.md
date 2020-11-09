@@ -11,6 +11,7 @@
 - Fixed Exceptions
 - Fixed readthedocs for autodoc
 - Fixed settings documentation
+- Fixed testcases
 
 ## 0.2.1 (2020-11-05)
 

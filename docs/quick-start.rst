@@ -19,18 +19,21 @@ Gmail API setup
 6. Download client cecret file in to project root as ``google_client_secret.json``
 7. You can now go to `Consent Screen <https://console.cloud.google.com/apis/credentials/consent>`_ for verification if you needed (Otherwise, only 100 logins allowed).
 
-
 Django setup
 ^^^^^^^^^^^^
 
-1. Add "gmailer" to your INSTALLED_APPS settings.py like this::
+1. Install python package::
+
+    pip install django-google-mailer
+
+2. Add "gmailer" to your INSTALLED_APPS settings.py like this::
 
     INSTALLED_APPS = [
         ...
         'gmailer',
     ]
 
-2. Add the following settings in to settings.py::
+3. Add the following settings in to settings.py::
 
     GMAIL_SECRET = "google_client_secret.json"
     GMAIL_SCOPES = [
@@ -41,8 +44,8 @@ Django setup
 
 In the above section, ``GMAIL_REDIRECT`` must be set to same URL as in OAuth Credentials
 
-3. Include the google mailer URLconf in your project urls.py like this::
+4. Include the google mailer URLconf in your project urls.py like this::
 
     path('gmailer/', include('gmailer.urls')),
 
-4. Visit http://localhost:8000/gmailer/ to display mailer urls.
+5. Visit http://localhost:8000/gmailer/ to display mailer urls.

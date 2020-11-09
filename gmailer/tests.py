@@ -1,23 +1,34 @@
-from django.test import TestCase, RequestFactory
-from unittest.mock import patch, sentinel
+from json import load as load_json
+from pathlib import Path
+from django.test import SimpleTestCase, RequestFactory
+from unittest.mock import patch, sentinel, Mock
 from gmailer.gmail import Gmail, InstalledAppFlow
-from django.conf import settings
-
-BASE_DIR = settings.BASE_DIR
-
-CLIENT_SECRETS_FILE = BASE_DIR/"docs"/"google_client_secret_sample.json"
 
 
-class GmailTestCase(TestCase):
+CLIENT_SECRETS_FILE = Path(__file__).resolve().parent/'data/sample.json'
+
+with open(CLIENT_SECRETS_FILE, "r") as csf:
+    CLIENT_SECRETS_INFO = load_json(csf)
+
+
+class GmailTestCase(SimpleTestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
-        self.user = sentinel.user
-        self.mailer = Gmail(
+        self.instance = Gmail(
             client_secrets_file=CLIENT_SECRETS_FILE,
             scopes=sentinel.scopes,
             redirect_uri=sentinel.redirect_uri,
-            user=self.user)
+            user=sentinel.user)
+
+    def test_init(self):
+        self.assertFalse(self.instance.activated)
+        self.assertEqual(self.instance.outbox, [])
+        self.assertEqual(self.instance.flow.client_config, CLIENT_SECRETS_INFO["web"])
+        self.assertEqual(self.instance.flow.oauth2session.client_id, CLIENT_SECRETS_INFO["web"]["client_id"])
+        self.assertIs(self.instance.flow.oauth2session.scope, sentinel.scopes)
+        self.assertIs(self.instance.flow.redirect_uri, sentinel.redirect_uri)
+        self.assertIs(self.instance.user, sentinel.user)
 
 
     @patch.object(InstalledAppFlow, "authorization_url", autoSpec=True)
@@ -25,11 +36,11 @@ class GmailTestCase(TestCase):
 
         mock_authorization_url.return_value = (sentinel.uri, sentinel.state)
 
-        self.assertEqual(self.mailer.authorize(), mock_authorization_url())
+        self.assertEqual(self.instance.authorize(), mock_authorization_url())
 
     @patch.object(InstalledAppFlow, "fetch_token", autoSpec=True)
     @patch.object(InstalledAppFlow, "credentials", autoSpec=True)
-    @patch("googleapiclient.discovery.build", autoSpec=True)
+    @patch("gmailer.gmail.build", autoSpec=True)
     def test_verify(self, mock_fetch_token, mock_credentials, mock_build):
 
         request = self.factory.get('/gmailer/verify', {
@@ -37,10 +48,14 @@ class GmailTestCase(TestCase):
             'state': 'sentinel.state',
             'scope': 'sentinel.scope' })
 
-        request.session = { 'oauth_state': 'sentinel.state' }
+        request.session = { }
+        with self.assertRaises(Gmail.StateError):
+            verified_result = self.instance.verify(request)
 
-        self.mailer.side_effect = Gmail.StateError
+        request.session['oauth_state'] = 'sentinel.state'
+        self.assertFalse(self.instance.activated)
 
-        verified_result = self.mailer.verify(request)
-        print(verified_result)
-        self.assertEqual(verified_result['user'], self.user)
+        verified_result = self.instance.verify(request)
+
+        self.assertEqual(verified_result['user'], sentinel.user)
+        self.assertTrue(self.instance.activated)
