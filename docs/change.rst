@@ -20,6 +20,7 @@ Fixes
 
 * Fixed settings documentation
 * Fixed testcases
+* Removed SettingError execption
 
 0.2.3 (2020-11-06)
 ------------------
