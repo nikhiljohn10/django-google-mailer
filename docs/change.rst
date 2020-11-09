@@ -2,6 +2,25 @@
 Changelog
 =========
 
+0.2.4 (2020-11-09)
+------------------
+
+Updates
+~~~~~~~
+
+
+* Updated makefile with doc updatation
+* Added basic test cases
+* Updated test cases for verify method
+* Updated PyPi setup
+
+Fixes
+~~~~~
+
+
+* Fixed settings documentation
+* Fixed testcases
+
 0.2.3 (2020-11-06)
 ------------------
 
@@ -17,8 +36,6 @@ Fixes
 
 * Fixed Exceptions
 * Fixed readthedocs for autodoc
-* Fixed settings documentation
-* Fixed testcases
 
 0.2.1 (2020-11-05)
 ------------------
