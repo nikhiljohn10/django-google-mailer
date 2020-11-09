@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.4 (2020-11-09)
+## 0.3.0 (2020-11-09)
 
 #### Updates
 
@@ -8,6 +8,7 @@
 - Added basic test cases
 - Updated test cases for verify method
 - Updated PyPi setup
+- Updated README file
 
 #### Fixes
 
