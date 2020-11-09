@@ -2,8 +2,26 @@
 Django Google Mailer
 ####################
 
-Django Google Mailer is a Django app which is an alternative to send emails
-using Google's Gmail API. This is the most secure method as it uses OAuth 2.0.
+.. image:: https://readthedocs.org/projects/django-google-mailer/badge/?version=stable
+  :target: https://django-google-mailer.readthedocs.io/en/stable/?badge=stable
+  :alt: Documentation Status
+.. image:: https://img.shields.io/github/v/release/nikhiljohn10/django-google-mailer
+  :alt: GitHub release
+.. image:: https://img.shields.io/pypi/status/django-google-mailer
+  :alt: PyPI - Status
+.. image:: https://img.shields.io/pypi/v/django-google-mailer
+  :target: https://pypi.org/project/django-google-mailer
+  :alt: PyPI
+.. image:: https://img.shields.io/pypi/pyversions/django-google-mailer
+  :alt: PyPI - Python Version
+.. image:: https://img.shields.io/pypi/djversions/django-google-mailer
+  :alt: PyPI - Django Version
+.. image:: https://img.shields.io/pypi/dm/django-google-mailer
+  :alt: PyPI - Downloads
+.. image:: https://img.shields.io/pypi/l/django-google-mailer
+  :alt: PyPI - License
+
+Django Google Mailer is a Django package which uses Gmail API to send emails to users as an administrator.
 
 Documentation version: |release|
 
@@ -29,13 +47,6 @@ Contents
   Source <https://github.com/nikhiljohn10/django-google-mailer>
   genindex
 
-
-Google Privacy Policies
-=======================
-
-- `Google APIs Terms of Service <https://developers.google.com/terms>`_
-- `Google API Services User Data Policy <https://developers.google.com/terms/api-services-user-data-policy>`_
-
 License
 =======
 
@@ -44,6 +55,12 @@ License
 .. meta::
   :description: Django Google Mailer is a Django app which is an alternative to send emails using Google's Gmail API. This is the most secure method as it uses OAuth 2.0.
   :keywords: django, google, gmail, api, python package
+
+Google Privacy Policies
+=======================
+
+- `Google APIs Terms of Service <https://developers.google.com/terms>`_
+- `Google API Services User Data Policy <https://developers.google.com/terms/api-services-user-data-policy>`_
 
 References
 ==========

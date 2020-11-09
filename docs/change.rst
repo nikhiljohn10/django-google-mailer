@@ -2,7 +2,7 @@
 Changelog
 =========
 
-0.2.4 (2020-11-09)
+0.3.0 (2020-11-09)
 ------------------
 
 Updates
@@ -13,6 +13,8 @@ Updates
 * Added basic test cases
 * Updated test cases for verify method
 * Updated PyPi setup
+* Updated README file
+* Changed Gmail initialisation method
 
 Fixes
 ~~~~~
@@ -21,6 +23,9 @@ Fixes
 * Fixed settings documentation
 * Fixed testcases
 * Removed SettingError execption
+* Fixed Makefile
+* Renamed project setting and removed runtest
+* Fixed badges
 
 0.2.3 (2020-11-06)
 ------------------

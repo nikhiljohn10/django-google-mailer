@@ -20,7 +20,10 @@ def verify(request):
     :param request: A request object received from requested view
     :rtype: :class:`JsonResponse` instance
     """
-    result = mailer.verify(request)
+    try:
+        result = mailer.verify(request)
+    except mailer.StateError as err:
+        return JsonResponse({'error': str(err)})
     return JsonResponse(result)
 
 def revoke(request):
@@ -29,7 +32,10 @@ def revoke(request):
     :param request: A request object received from requested view
     :rtype: :class:`JsonResponse` instance
     """
-    mailer.revoke()
+    try:
+        mailer.revoke()
+    except mailer.UnauthorizedAPIError:
+        return JsonResponse({'error': 'API access is already revoked. Please authorize api access.'})
     return JsonResponse({'message': 'Successfully revoked the API service'})
 
 def test_send_mail(request):
@@ -38,5 +44,8 @@ def test_send_mail(request):
     :param request: A request object received from requested view
     :rtype: :class:`JsonResponse` instance
     """
-    mailer.test_mail()
+    try:
+        mailer.test_mail()
+    except mailer.UnauthorizedAPIError:
+        return JsonResponse({'error': 'Unable to send test mail. Please authorize api access.'})
     return JsonResponse({'message': 'Successfully send test mail'})

@@ -9,6 +9,7 @@
 - Updated test cases for verify method
 - Updated PyPi setup
 - Updated README file
+- Changed Gmail initialisation method
 
 #### Fixes
 
@@ -17,6 +18,7 @@
 - Removed SettingError execption
 - Fixed Makefile
 - Renamed project setting and removed runtest
+- Fixed badges
 
 ## 0.2.3 (2020-11-06)
 

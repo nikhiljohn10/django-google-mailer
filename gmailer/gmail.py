@@ -17,27 +17,17 @@ _GMAIL_CONSTS = {
 }
 
 class Gmail:
-    """This class defines all the core functional methods of Gmailer
-
-    :param str user: Admin user's name which should appear to the end user who receive email
-    :param str client_secrets_file: Current state to be in
-    :param str scopes: Scopes which allow user to fetch data
-    :param str redirect_uri: Redirection URL for Google to use after verification
-
-    .. note::
-       You need to add GMAIL variables inside :mod:`settings.py` for proper
-       initialisation of this class
-    """
-
-    def __init__(self, client_secrets_file, scopes, redirect_uri, user):
+    """This class defines all the core functional methods of Gmailer"""
+    def __init__(self):
+        self.add_settings()
         self.activated = False
         """A flag which indicate if Gmail API is authorized to be used"""
-        self.user = user
+        self.user = settings.GMAIL_USER
         self.outbox = []
         self.flow = InstalledAppFlow.from_client_secrets_file(
-            client_secrets_file=client_secrets_file,
-            scopes=scopes,
-            redirect_uri=redirect_uri)
+            client_secrets_file=settings.GMAIL_SECRET,
+            scopes=settings.GMAIL_SCOPES,
+            redirect_uri=settings.GMAIL_REDIRECT)
         """Store a :class:`Flow` instance using client secret and scope list"""
 
     def authorize(self):
@@ -87,13 +77,17 @@ class Gmail:
 
     def revoke(self):
         """Revoke the data which is used by Gmail API to work"""
-        if hasattr(self, 'service'):
-            self.service.close()
-        self.activated = False
-        self.credentials = None
-        self.service = None
-        self.email = ''
-        self.outbox = []
+        if self.activated:
+            if hasattr(self, 'service'):
+                self.service.close()
+            self.activated = False
+            self.credentials = None
+            self.service = None
+            self.email = ''
+            self.outbox = []
+        else:
+            raise self.UnauthorizedAPIError()
+
 
     def _create_message(self, subject, message_text, from_email, recipient_list, html):
         """Create a plain text/html message which can be send by Gmail API service
@@ -164,16 +158,18 @@ class Gmail:
 
     @staticmethod
     def add_settings():
-        """Check each setting names if they exists inside Django Settings
+        """Add each setting in to Django settings if they dont exists inside Django Settings
 
         :rtype: bool
         """
         for attr in ['GMAIL_SECRET', 'GMAIL_SCOPES', 'GMAIL_REDIRECT', 'GMAIL_USER']:
             if not hasattr(settings, attr):
                 setattr(settings, attr, _GMAIL_CONSTS[attr])
-        installed_apps = getattr(settings, 'INSTALLED_APPS', [])
+        installed_apps = settings.INSTALLED_APPS
         installed_apps += [ 'gmailer', ]
         setattr(settings, 'INSTALLED_APPS', installed_apps)
+        if settings.DEBUG and settings.ALLOWED_HOSTS == []:
+            setattr(settings, 'ALLOWED_HOSTS', ['*'])
         return True
 
     class StateError(Exception):
@@ -204,9 +200,4 @@ class Gmail:
 
 
 
-if Gmail.add_settings():
-    mailer = Gmail(
-        client_secrets_file=settings.GMAIL_SECRET,
-        scopes=settings.GMAIL_SCOPES,
-        redirect_uri=settings.GMAIL_REDIRECT,
-        user=settings.GMAIL_USER)
+mailer = Gmail()
