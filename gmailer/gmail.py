@@ -164,7 +164,7 @@ class Gmail:
 
     @staticmethod
     def add_settings():
-        """Check each setting names if they exists inside Django Settings and raise :class:`SettingError` exception otherwise
+        """Check each setting names if they exists inside Django Settings
 
         :rtype: bool
         """
@@ -175,19 +175,6 @@ class Gmail:
         installed_apps += [ 'gmailer', ]
         setattr(settings, 'INSTALLED_APPS', installed_apps)
         return True
-
-    class SettingError(Exception):
-        """When settings are not properly configured, this exception is raised
-
-        :param str setting_name: Setting which is missing or misconfigured.
-        :param error: Body of the email send
-        :type error: :class:`Exception`
-        """
-
-        def __init__(self, setting_name, error=None):
-            self.message = setting_name + ' is missing/misconfigured inside Django Settings'
-            self.error = error
-            super().__init__(self.message)
 
     class StateError(Exception):
         """When state of the request is not matched with state from request, this exception is raised
@@ -223,5 +210,3 @@ if Gmail.add_settings():
         scopes=settings.GMAIL_SCOPES,
         redirect_uri=settings.GMAIL_REDIRECT,
         user=settings.GMAIL_USER)
-else:
-    raise Gmail.SettingError()
