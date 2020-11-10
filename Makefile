@@ -27,6 +27,10 @@ clean-app:
 		-name "__pycache__" -o \
 		-name ".DS_Store" -o \
 		-name "Thumb.db" \)  -exec rm -rf {} +
+	@find ./scripts \( \
+		-name "__pycache__" -o \
+		-name ".DS_Store" -o \
+		-name "Thumb.db" \)  -exec rm -rf {} +
 
 clean-venv:
 	@rm -rf ./venv
@@ -100,6 +104,6 @@ run:
 	@echo
 	@python manage.py runserver 0.0.0.0:8000
 
-clean: clean-build clean-app clean-venv clean-docs
+clean: clean-build clean-app clean-docs clean-test
 
 .PHONY: setup build release venv clean html update version
