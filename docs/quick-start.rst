@@ -26,23 +26,15 @@ Django setup
 
     pip install django-google-mailer
 
-2. Add "gmailer" to your INSTALLED_APPS settings.py like this::
+2. Add name of the sender in settings.py (This step is optional)::
 
-    INSTALLED_APPS = [
-        ...
-        'gmailer',
-    ]
+    GMAIL_USER = "Django Admin"
 
-3. Add the following settings in to settings.py::
+3. Add Google Auth redirection URL in settings.py::
 
-    GMAIL_SECRET = "google_client_secret.json"
-    GMAIL_SCOPES = [
-        "https://www.googleapis.com/auth/gmail.metadata",
-        "https://www.googleapis.com/auth/gmail.send",
-    ]
     GMAIL_REDIRECT = "http://localhost:8000/gmailer/verify"
 
-In the above section, ``GMAIL_REDIRECT`` must be set to same URL as in OAuth Credentials
+Here, ``GMAIL_REDIRECT`` must be set to same URL as in OAuth Credentials instead of the url given above.
 
 4. Include the google mailer URLconf in your project urls.py like this::
 

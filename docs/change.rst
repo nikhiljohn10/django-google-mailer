@@ -2,25 +2,33 @@
 Changelog
 =========
 
-0.2.4 (2020-11-09)
+0.3.1 (2020-11-10)
 ------------------
 
 Updates
 ~~~~~~~
 
 
-* Updated makefile with doc updatation
+* Updated makefile with doc updation
 * Added basic test cases
 * Updated test cases for verify method
 * Updated PyPi setup
+* Updated README file
+* Changed Gmail initialisation method
+* Updated Makefile upgrade and version script
 
 Fixes
 ~~~~~
 
 
 * Fixed settings documentation
-* Fixed testcases
-* Removed SettingError execption
+* Fixed test cases
+* Removed SettingError exception
+* Fixed Makefile
+* Renamed project setting and removed runtest
+* Fixed badges
+* Fixed release script
+* Fixed travis-ci file
 
 0.2.3 (2020-11-06)
 ------------------
@@ -29,7 +37,7 @@ Updates
 ~~~~~~~
 
 
-* Updated makefile with doc updatation
+* Updated makefile with doc updation
 
 Fixes
 ~~~~~

@@ -15,11 +15,12 @@ class GmailTestCase(SimpleTestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
-        self.instance = Gmail(
-            client_secrets_file=CLIENT_SECRETS_FILE,
-            scopes=sentinel.scopes,
-            redirect_uri=sentinel.redirect_uri,
-            user=sentinel.user)
+        with self.settings(
+            GMAIL_USER=sentinel.user,
+            GMAIL_SECRET=CLIENT_SECRETS_FILE,
+            GMAIL_SCOPES=sentinel.scopes,
+            GMAIL_REDIRECT=sentinel.redirect_uri):
+            self.instance = Gmail()
 
     def test_init(self):
         self.assertFalse(self.instance.activated)
