@@ -21,6 +21,7 @@
 - Renamed project setting and removed runtest
 - Fixed badges
 - Fixed release script
+- Fixed travis-ci file
 
 ## 0.2.3 (2020-11-06)
 

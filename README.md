@@ -1,5 +1,6 @@
 # Django Google Mailer
 
+[![Build Status](https://travis-ci.com/nikhiljohn10/django-google-mailer.svg?branch=main)](https://travis-ci.com/nikhiljohn10/django-google-mailer)
 [![Documentation Status](https://readthedocs.org/projects/django-google-mailer/badge/?version=stable)](https://django-google-mailer.readthedocs.io/en/stable/?badge=stable)
 ![GitHub release](https://img.shields.io/github/v/release/nikhiljohn10/django-google-mailer)
 ![PyPI - Status](https://img.shields.io/pypi/status/django-google-mailer)
@@ -9,7 +10,7 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/django-google-mailer)
 ![PyPI - License](https://img.shields.io/pypi/l/django-google-mailer)
 
-Django Google Mailer is a Django package which uses Gmail API to send emails to users as an administrator. 
+Django Google Mailer is a Django package which uses Gmail API to send emails to users as an administrator.
 
 ### Developing
 

@@ -2,6 +2,8 @@
 Django Google Mailer
 ####################
 
+.. image:: https://travis-ci.com/nikhiljohn10/django-google-mailer.svg?branch=main
+    :target: https://travis-ci.com/nikhiljohn10/django-google-mailer
 .. image:: https://readthedocs.org/projects/django-google-mailer/badge/?version=stable
   :target: https://django-google-mailer.readthedocs.io/en/stable/?badge=stable
   :alt: Documentation Status
