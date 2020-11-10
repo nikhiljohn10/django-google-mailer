@@ -9,20 +9,21 @@ Updates
 ~~~~~~~
 
 
-* Updated makefile with doc updatation
+* Updated makefile with doc updation
 * Added basic test cases
 * Updated test cases for verify method
 * Updated PyPi setup
 * Updated README file
 * Changed Gmail initialisation method
+* Updated Makefile upgrade and version script
 
 Fixes
 ~~~~~
 
 
 * Fixed settings documentation
-* Fixed testcases
-* Removed SettingError execption
+* Fixed test cases
+* Removed SettingError exception
 * Fixed Makefile
 * Renamed project setting and removed runtest
 * Fixed badges
@@ -34,7 +35,7 @@ Updates
 ~~~~~~~
 
 
-* Updated makefile with doc updatation
+* Updated makefile with doc updation
 
 Fixes
 ~~~~~

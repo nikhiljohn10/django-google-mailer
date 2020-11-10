@@ -11,6 +11,9 @@ venv:
 	@echo "To deactivate - deactivate"
 	@echo
 
+version:
+	@python scripts/version.py
+
 clean-build:
 	@rm -rf ./build/ ./dist/ ./django_google_mailer.egg-info
 
@@ -44,8 +47,11 @@ test:
 	@python manage.py test
 
 upgrade:
+	@-pip uninstall -yr requirements.txt
+	@pip uninstall -y wheel setuptools
 	@pip install -Ur requirements/development.txt
 	@pip freeze > requirements.txt
+	@pip install -U pip wheel setuptools
 
 update: clean-docs
 	@m2r2 --overwrite CHANGELOG.md
@@ -63,7 +69,7 @@ build: clean-build update
 test-release: test build
 	@twine upload --repository testpypi dist/* --config-file .pypirc
 
-release: test build
+release: test build version
 	@twine upload dist/* --config-file .pypirc
 
 run:
@@ -80,4 +86,5 @@ run:
 
 clean: clean-build clean-app clean-venv clean-docs
 
-.PHONY: setup build release venv clean html update
+
+.PHONY: setup build release venv clean html update version
