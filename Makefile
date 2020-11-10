@@ -2,6 +2,8 @@
 SAMPLE_SECRET := https://raw.githubusercontent.com/googleapis/google-auth-library-python-oauthlib/master/tests/unit/data/client_secrets.json
 
 BASE_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+VERSION := $(shell python scripts/version.py)
 
 venv:
 	@if [ ! -d "./venv" ]; then python3 -m venv venv; fi
@@ -12,7 +14,9 @@ venv:
 	@echo
 
 version:
-	@python scripts/version.py
+	@echo "Current version:   $(VERSION)"
+	@echo "Current branch:    $(BRANCH)"
+
 
 clean-build:
 	@rm -rf ./build/ ./dist/ ./django_google_mailer.egg-info
@@ -43,7 +47,7 @@ setup:
 	@echo "====> https://console.cloud.google.com/apis/credentials"
 	@echo
 
-test:
+test: version
 	@python manage.py test
 
 upgrade:
@@ -67,10 +71,22 @@ build: clean-build update
 	@python3 setup.py sdist bdist_wheel
 
 test-release: test build
+ifeq ($(BRANCH), develop)
 	@twine upload --repository testpypi dist/* --config-file .pypirc
+else
+	@echo
+	@echo "You can only release latest version from develop branch"
+	@echo
+endif
 
-release: test build version
+release: test build
+ifeq ($(BRANCH), main)
 	@twine upload dist/* --config-file .pypirc
+else
+	@echo
+	@echo "You can only release stable version from main branch"
+	@echo
+endif
 
 run:
 	@python manage.py makemigrations
@@ -85,6 +101,5 @@ run:
 	@python manage.py runserver 0.0.0.0:8000
 
 clean: clean-build clean-app clean-venv clean-docs
-
 
 .PHONY: setup build release venv clean html update version

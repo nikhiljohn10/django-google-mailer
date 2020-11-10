@@ -20,6 +20,7 @@
 - Fixed Makefile
 - Renamed project setting and removed runtest
 - Fixed badges
+- Fixed release script
 
 ## 0.2.3 (2020-11-06)
 
